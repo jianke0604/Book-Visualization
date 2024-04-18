@@ -266,6 +266,9 @@ export default {
                         top: '5%',
                         left: 'left',
                         orient: 'vertical',
+                        textStyle: {
+                            color: '#FFFFFF' // Set the color of the legend to white
+                        },
                         formatter: function (name) {
                             var target = myChart.getOption().series[0].data.find((item) => {return item.name === name});
                             return name + ' : ' + target.value;
@@ -273,7 +276,7 @@ export default {
                     },
                     series: [
                         {
-                        name: 'Access From',
+                        name: '年总入馆人数',
                         type: 'pie',
                         radius: ['40%', '70%'],
                         avoidLabelOverlap: false,
@@ -289,7 +292,8 @@ export default {
                             label: {
                             show: true,
                             fontSize: 40,
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
+                            color: '#FFFFFF'
                             }
                         },
                         labelLine: {
@@ -335,7 +339,10 @@ export default {
 
             option = {
             title: {
-                text: '入馆与借阅分布'
+                text: '入馆与借阅分布',
+                textStyle: {
+                    color: '#FFFFFF'
+                }
             },
             tooltip: {
                 trigger: 'axis',
@@ -343,7 +350,11 @@ export default {
                 type: 'shadow'
                 }
             },
-            legend: {},
+            legend: {
+                textStyle: {
+                    color: '#FFFFFF'
+                }
+            },
             grid: {
                 left: '3%',
                 right: '4%',
@@ -352,11 +363,17 @@ export default {
             },
             xAxis: {
                 type: 'value',
-                boundaryGap: [0, 0.01]
+                boundaryGap: [0, 0.01],
+                axisLabel: {
+                    color: '#FFFFFF'
+                }
             },
             yAxis: {
                 type: 'category',
-                data: sortedNumberArr.map(([key, _]) => key)
+                data: sortedNumberArr.map(([key, _]) => key),
+                axisLabel: {
+                    color: '#FFFFFF'
+                }
             },
             series: [
                 {
