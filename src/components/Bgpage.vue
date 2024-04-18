@@ -31,21 +31,25 @@
                     <Viewbox
                         :title="subTitle"
                         :boxb="true"
-                    />
+                    />   
                 </div>
             </div>
             <div class="container">
                 <div class="box">
                     <Viewbox
-                        title="测试子标题"
+                        title="用户画像"
                         :boxb="true"
-                    />
+                    >
+                        <div id="portrait" style="width: 100%; height: 100%;"></div>
+                    </Viewbox>
                 </div>
                 <div class="box">
                     <Viewbox
-                        title="测试子标题"
+                        title="读者学院分布"
                         :boxb="true"
-                    />
+                    >
+                        <div id="department" style="width: 100%; height: 100%;"></div>
+                    </Viewbox>
                 </div>
             </div>
         </div>
@@ -66,6 +70,11 @@ export default {
         return {
             subTitle: "子标题",
             heatData: [], // 保存检索热度数据
+            entryData: [], // 保存入馆数据
+            // groupedData: {本科: 1002523, 博士: 334600, 其他: 1158997, 研究生: 628196, 教师: 128236}, // 保存按 ID 分组的入馆数据
+            groupedData: {},
+            academyNumberData: {},    // 入馆人数
+            academyBorrowData: {},
             libraryAttendanceData: [], // 新建全年在馆人数数据
             month: '1', // 默认月份为1
             day: '11', // 默认日期为1
@@ -76,11 +85,15 @@ export default {
         this.loadHeatData();
         // Load the library attendance data when the component is mounted
         this.loadLibraryAttendanceData();
+        this.loadEntryData();   // 数据量巨大，最好预处理，直接使用line #72 的数据进行绘制，而不是实时处理，延时高达1min
+        // this.drawPortrait();
+        // this.loadBorrowData();
+        // this.drawDepartment();
     },
     methods: {
         loadHeatData() {
             // Load the JSON data asynchronously
-            import('../../../data/03-检索热度.json')
+            import('/data/03-检索热度.json')
                 .then(module => {
                     // Once data is loaded, assign it to the heatData array
                     this.heatData = module.default.data;
@@ -88,11 +101,12 @@ export default {
                 .catch(error => {
                     console.error('Error loading heat data:', error);
                 });
+                console.log(this.heatData);
         },
         loadLibraryAttendanceData() {
-            // Load the JSON data asynchronously
+            // Load the JSON data asynchro nously
             let dateStr = `2023/${this.month}/${this.day}`;
-            import('../../../data/05-2023年全年实时在馆人数-2分钟一更新.json')
+            import('/data/05-2023年全年实时在馆人数-2分钟一更新.json')
                 .then(module => {
                     // Filter the data for January 1st
                     this.libraryAttendanceData = module.RECORDS.filter(item => item.logTime.startsWith(dateStr));
@@ -200,6 +214,165 @@ export default {
             
             // 使用刚指定的配置项和数据显示图表
             attendanceChart.setOption(option);
+        },
+        loadEntryData() {
+            // 如果没有id，默认为其他
+            // ! 我将文件名修改成02了，直接修改成本地的即可
+            fetch('/data/02.json')
+                .then(response => response.json())
+                .then(data => {
+                    this.entryData = data.RECORDS;
+                    this.groupDataByID(this.entryData);
+                })
+                .catch(error => {
+                    console.error('Error loading entry data:', error);
+                });
+            // console.log(this.heatData);
+            // console.log(this.entryData);
+        },
+        groupDataByID(data) {
+            data.forEach(element => {
+                let id = element.ID_type;
+                let academy = element.Department;
+                if (id === '' || id === null) {
+                    id = '其他';
+                }
+                if (!this.groupedData[id]) {
+                    this.groupedData[id] = 1;
+                } else {
+                    this.groupedData[id] += 1;
+                }
+                if (academy !== '' && academy !== null) {
+                    if (!this.academyNumberData[academy]) {
+                        this.academyNumberData[academy] = 1;
+                    } else {
+                        this.academyNumberData[academy] += 1;
+                    }
+                }
+                
+            });
+            this.drawPortrait();
+            this.loadBorrowData();
+            console.log(this.groupedData);
+        },
+        drawPortrait() {
+            var chartDom = document.getElementById('portrait');
+            var myChart = echarts.init(chartDom);
+            let option = {
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    legend: {
+                        top: '5%',
+                        left: 'left',
+                        orient: 'vertical',
+                        formatter: function (name) {
+                            var target = myChart.getOption().series[0].data.find((item) => {return item.name === name});
+                            return name + ' : ' + target.value;
+                        }
+                    },
+                    series: [
+                        {
+                        name: 'Access From',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        padAngle: 5,
+                        itemStyle: {
+                            borderRadius: 10
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                            show: true,
+                            fontSize: 40,
+                            fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: Object.entries(this.groupedData).map(([key, value]) => ({value : value, name : key}))
+                        }
+                    ]
+                };
+            myChart.setOption(option);
+        },
+        loadBorrowData() {
+            fetch('/data/01.json')
+                .then(response => response.json())
+                .then(data => {
+                    this.groupDataByDepartment(data.RECORDS);
+                })
+                .catch(error => {
+                    console.error('Error loading entry data:', error);
+                });
+        },
+        groupDataByDepartment(data) {
+            data.forEach(element => {
+                let dp = element["学院"]
+                let type = element["事件类型"]
+                if (dp !== '' && dp !== null && type === "借阅") {
+                    if (!this.academyBorrowData[dp]) {
+                        this.academyBorrowData[dp] = 1;
+                    } else {
+                        this.academyBorrowData[dp] += 1;
+                    }
+                }
+            });
+            console.log(this.academyBorrowData);
+            this.drawDepartment();
+        },
+        drawDepartment() {
+            let sortedNumberArr = Object.entries(this.academyBorrowData).sort((a, b) => b[1] - a[1]);
+            sortedNumberArr = sortedNumberArr.slice(0, 6).reverse();
+            var chartDom = document.getElementById('department');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            option = {
+            title: {
+                text: '入馆与借阅分布'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                type: 'shadow'
+                }
+            },
+            legend: {},
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                boundaryGap: [0, 0.01]
+            },
+            yAxis: {
+                type: 'category',
+                data: sortedNumberArr.map(([key, _]) => key)
+            },
+            series: [
+                {
+                name: '入馆人数',
+                type: 'bar',
+                data: sortedNumberArr.map(([key, _]) => this.academyNumberData[key])
+                },
+                {
+                name: '借阅数量',
+                type: 'bar',
+                data: sortedNumberArr.map(([_, value]) => value)
+                }
+            ]
+            };
+
+            option && myChart.setOption(option);
         }
     }
 }
