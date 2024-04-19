@@ -29,9 +29,11 @@
                 </div>
                 <div class="box">
                     <Viewbox
-                        :title="subTitle"
+                        title="借还数据"
                         :boxb="true"
-                    />   
+                    >
+                        <Borrowgraph :fmonth="month" :fday="day"/>
+                    </Viewbox>
                 </div>
             </div>
             <div class="container">
@@ -52,6 +54,26 @@
                     </Viewbox>
                 </div>
             </div>
+            <div class="container">
+                <div class="box">
+                    <Viewbox
+                        title="小组学习室/面试空间预约"
+                        :boxb="true"
+                    >
+                        <Xzxxs/>
+                    </Viewbox>
+                </div>
+                <div class="box">
+                    <Viewbox
+                        title="共享办公位热度"
+                        :boxb="true"
+                    >
+
+                        <Officegraph/>
+                    </Viewbox>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -60,11 +82,16 @@
 import Header from './Header.vue'
 import Viewbox from './viewbox/Viewbox.vue'
 import * as echarts from 'echarts';
-
+import Borrowgraph from './Borrowgraph.vue';
+import Xzxxs from './Xzxxs.vue';
+import Officegraph from './Officegraph.vue';
 export default {
     components: {
         Header,
-        Viewbox
+        Viewbox,
+        Borrowgraph,
+        Xzxxs,
+        Officegraph
     },
     data() {
         return {
@@ -93,7 +120,7 @@ export default {
     methods: {
         loadHeatData() {
             // Load the JSON data asynchronously
-            import('/data/03-检索热度.json')
+            import('../../../data/03-检索热度.json')
                 .then(module => {
                     // Once data is loaded, assign it to the heatData array
                     this.heatData = module.default.data;
@@ -106,7 +133,7 @@ export default {
         loadLibraryAttendanceData() {
             // Load the JSON data asynchro nously
             let dateStr = `2023/${this.month}/${this.day}`;
-            import('/data/05-2023年全年实时在馆人数-2分钟一更新.json')
+            import('../../../data/05-2023年全年实时在馆人数-2分钟一更新.json')
                 .then(module => {
                     // Filter the data for January 1st
                     this.libraryAttendanceData = module.RECORDS.filter(item => item.logTime.startsWith(dateStr));
@@ -218,7 +245,7 @@ export default {
         loadEntryData() {
             // 如果没有id，默认为其他
             // ! 我将文件名修改成02了，直接修改成本地的即可
-            fetch('/data/02.json')
+            fetch('../../../data/02.json')
                 .then(response => response.json())
                 .then(data => {
                     this.entryData = data.RECORDS;
@@ -228,7 +255,11 @@ export default {
                     console.error('Error loading entry data:', error);
                 });
             // console.log(this.heatData);
+            // console.log(this.entryData);    
+            // console.log(this.heatData);
             // console.log(this.entryData);
+           
+            
         },
         groupDataByID(data) {
             data.forEach(element => {
