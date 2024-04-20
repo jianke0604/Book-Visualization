@@ -5,22 +5,25 @@
             <div class="container">
                 <div class="box">
                     <Viewbox
-                        title="检索热度"
+                        title=""
                         :boxb="true"
                     >
-                        <div class="word-cloud">
-                            <div v-for="(item, index) in heatData" :key="index" :style="{ fontSize: item[1] + 'px', left: Math.random() * 75 + '%', top: Math.random() * 60 + '%' }">{{ item[0] }} </div>
-                        </div>
+                        <div style="color: white; font-weight: bold; font-style: italic;">检索热度：</div><br>
+                        <div id="myEchart" style="width: 100%; height: 40%;"></div><br>
+                        <div style="color: white; font-weight: bold; font-style: italic;">新书榜单：</div><br>
+                        <div id="newBook" style="color: white"> 1 段成式. 《神游大唐》. I242.1/A57-6 2023</div>
+                        <div id="newBook" style="color: white"> 2 巴菲特. 《父亲巴菲特教我的事》. I712.55/E59 2023</div>
+                        <div id="newBook" style="color: white"> 3 马瑟斯. 《Python编程》. TP311.56/I53 2023</div>
                     </Viewbox>
                 </div>
                 <div class="box">
                     <!-- 月份和日期输入框 -->
-                    <div>
+                    <div style="color: white">
                         月份：<input type="text" v-model="month" @input="updateDataStr">
                         日期：<input type="text" v-model="day" @input="updateDataStr"><br>
                     </div>
                     <Viewbox
-                        title="1月1日实时在馆人数分布"
+                        title=""
                         :boxb="true"
                     >
                         <!-- 曲线图容器 -->
@@ -82,6 +85,7 @@
 import Header from './Header.vue'
 import Viewbox from './viewbox/Viewbox.vue'
 import * as echarts from 'echarts';
+import 'echarts-wordcloud';
 import Borrowgraph from './Borrowgraph.vue';
 import Xzxxs from './Xzxxs.vue';
 import Officegraph from './Officegraph.vue';
@@ -104,20 +108,82 @@ export default {
             academyBorrowData: {},
             libraryAttendanceData: [], // 新建全年在馆人数数据
             month: '1', // 默认月份为1
-            day: '11', // 默认日期为1
+            day: '31', // 默认日期为1
         }
     },
     mounted() {
         // Load the heat data when the component is mounted
         this.loadHeatData();
+        this.initEchart();
         // Load the library attendance data when the component is mounted
         this.loadLibraryAttendanceData();
-        this.loadEntryData();   // 数据量巨大，最好预处理，直接使用line #72 的数据进行绘制，而不是实时处理，延时高达1min
+        // this.loadEntryData();   // 数据量巨大，最好预处理，直接使用line #72 的数据进行绘制，而不是实时处理，延时高达1min
         // this.drawPortrait();
         // this.loadBorrowData();
         // this.drawDepartment();
     },
     methods: {
+        initEchart(){
+    const initChart = () => {
+        const echartDom = document.getElementById('myEchart')
+        const myChart = echarts.init(echartDom)
+        const option  = {
+            series: [{
+                type: 'wordCloud',
+                shape: 'diamond',
+                keepAspect: false,
+                left: 'center',
+                top: 'center',
+                width: '100%',
+                height: '100%',
+                right: null,
+                bottom: null,
+                sizeRange: [12, 60], // 调整文字大小范围
+                rotationRange: [0,0], // 调整文字旋转角度范围
+                gridSize: 16, // 调整词云网格大小
+                drawOutOfBound: false,
+                layoutAnimation: true,
+                textStyle: {
+                    fontFamily: 'sans-serif',
+                    fontWeight: 'bold',
+                    color: function () {
+                        // 使用明亮的颜色
+                        return 'rgb(' + [
+                            Math.round(50 + Math.random() * 205),
+                            Math.round(50 + Math.random() * 205),
+                            Math.round(50 + Math.random() * 205)
+                        ].join(',') + ')';
+                    }
+                },
+                emphasis: {
+                    textStyle: {
+                        textShadowBlur: 3,
+                        textShadowColor: '#333'
+                    }
+                },
+                data: this.heatData.map(function (item) {
+                    console.log(item);
+                    return {
+                        name: item[0],
+                        value: Math.sqrt(item[1])
+                    }
+                })
+            }]
+        };
+        option && myChart.setOption(option)
+
+        // 随着屏幕大小调节图表
+        window.addEventListener("resize", () => {
+            myChart.resize();
+        });
+    };
+
+    if (document.readyState === 'complete') {
+        initChart();
+    } else {
+        window.onload = initChart;
+    }
+        },
         loadHeatData() {
             // Load the JSON data asynchronously
             import('../../../data/03-检索热度.json')
@@ -132,7 +198,7 @@ export default {
         },
         loadLibraryAttendanceData() {
             // Load the JSON data asynchro nously
-            let dateStr = `2023/${this.month}/${this.day}`;
+            let dateStr = `2023/${this.month}/${this.day} `;
             import('../../../data/05-2023年全年实时在馆人数-2分钟一更新.json')
                 .then(module => {
                     // Filter the data for January 1st
@@ -166,14 +232,21 @@ export default {
             // 配置项
             let option = {
                 title: {
-                    text: '1月1日实时在馆人数分布',
-                    left: 'center'
+                    text: `${this.month}月${this.day}日实时在馆人数分布`,
+                    left: 'center',
+                        textStyle: {
+                        color: '#FFFFFF' // 设置标题文字颜色为白色
+                    }
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['主馆', '李政道图书馆', '包玉刚图书馆', '徐汇社科阅览室']
+                    data: ['主馆', '李政道图书馆', '包玉刚图书馆', '徐汇社科阅览室'],
+                    textStyle: {
+                        color: '#fff' // 设置图例文字颜色为白色
+                    },
+                    top: 30 // 设置图例的位置在图表上方，距离顶部 30px
                 },
                 grid: {
                     left: '3%',
@@ -193,11 +266,29 @@ export default {
                             } else {
                                 return '';
                             }
+                        },
+                        textStyle: {
+                            color: '#fff' // 设置坐标轴刻度文字颜色为白色
                         }
+                    },
+                    axisLine: {
+                    lineStyle: {
+                        color: '#fff' // 设置坐标轴线颜色为白色
                     }
+                }
                 }, 
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#fff' // 设置坐标轴线颜色为白色
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff' // 设置坐标轴文字颜色为白色
+                        }
+                    }
                 },
                 series: [
                     {

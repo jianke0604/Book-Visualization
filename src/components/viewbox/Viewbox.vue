@@ -44,7 +44,7 @@ export default {
   
 <style>
 @import "./index";
-.word-cloud {
+/* .word-cloud {
     position: relative;
     width: 100%;
     height: 100%;
@@ -53,11 +53,15 @@ export default {
 .word-cloud div {
     position: absolute;
     display: inline-block;
-    border: 1px solid #290665; /* 圆形边框 */
-    border-radius: 50%; /* 圆形边框 */
-    padding: 5px; /* 调整圆形内边距 */
-    background-color: #239ec7; /* 圆形背景色 */
-    white-space: nowrap; /* 防止关键词换行 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    border: 1px solid #290665; 
+    border-radius: 50%; 
+    padding: 5px; 
+    background-color: #239ec7; 
+    white-space: nowrap; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+} */
+.word-cloud {
+  width: 100%;
+  height: 300px; /* 根据需要调整词云图的高度 */
 }
 </style>
