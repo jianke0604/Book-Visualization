@@ -1,8 +1,12 @@
 <template>
     <div class="bgpage">
         <Header></Header>
+                    <!-- 月份和日期输入框 -->
+                    <VueCtkDateTimePicker v-model="date" 
+                    format="DD-MM" formatted="l" color="coral" input-size="sm" dark no-header overlay no-button noClearButton noLabel 
+                    only-date></VueCtkDateTimePicker>
         <div>
-            <div class="container">
+            <div class="container" id="first-line">
                 <div class="box">
                     <Viewbox
                         title=""
@@ -17,11 +21,6 @@
                     </Viewbox>
                 </div>
                 <div class="box">
-                    <!-- 月份和日期输入框 -->
-                    <div style="color: white">
-                        月份：<input type="text" v-model="month" @input="updateDataStr">
-                        日期：<input type="text" v-model="day" @input="updateDataStr"><br>
-                    </div>
                     <Viewbox
                         title=""
                         :boxb="true"
@@ -39,7 +38,7 @@
                     </Viewbox>
                 </div>
             </div>
-            <div class="container">
+            <div class="container" id="second-line">
                 <div class="box">
                     <Viewbox
                         title="用户画像"
@@ -53,11 +52,9 @@
                         title="读者学院分布"
                         :boxb="true"
                     >
-                        <div id="department" style="width: 100%; height: 100%;"></div>
+                        <div id="department" style="width: 100%; height: 80%;"></div>
                     </Viewbox>
                 </div>
-            </div>
-            <div class="container">
                 <div class="box">
                     <Viewbox
                         title="小组学习室/面试空间预约"
@@ -76,11 +73,13 @@
                     </Viewbox>
                 </div>
             </div>
+            <div class="container">
+                
+            </div>
 
         </div>
     </div>
 </template>
-
 <script>
 import Header from './Header.vue'
 import Viewbox from './viewbox/Viewbox.vue'
@@ -89,13 +88,17 @@ import 'echarts-wordcloud';
 import Borrowgraph from './Borrowgraph.vue';
 import Xzxxs from './Xzxxs.vue';
 import Officegraph from './Officegraph.vue';
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+
 export default {
     components: {
         Header,
         Viewbox,
         Borrowgraph,
         Xzxxs,
-        Officegraph
+        Officegraph,
+        VueCtkDateTimePicker
     },
     data() {
         return {
@@ -111,9 +114,19 @@ export default {
             libraryAttendanceData: [], // 新建全年在馆人数数据
             month: '1', // 默认月份为1
             day: '31', // 默认日期为1
+            date: "01-01", // 日期选择器的值
+        }
+    },
+    watch: {
+        date: function (val) {
+            console.log(val);
+            this.day = val.split('-')[0].replace(/^[0]+/,'');
+            this.month = val.split('-')[1].replace(/^[0]+/,'');
+            this.updateDataStr();
         }
     },
     mounted() {
+        console.log(this.date);
         // Load the heat data when the component is mounted
         this.loadHeatData();
         this.initEchart();
@@ -399,7 +412,7 @@ export default {
                         {
                         name: '年总入馆人数',
                         type: 'pie',
-                        radius: ['40%', '70%'],
+                        radius: ['30%', '60%'],
                         avoidLabelOverlap: false,
                         padAngle: 5,
                         itemStyle: {
@@ -457,7 +470,7 @@ export default {
             var chartDom = document.getElementById('department');
             var myChart = echarts.init(chartDom);
             var option;
-
+            
             option = {
             title: {
                 text: '入馆与借阅分布',
@@ -515,7 +528,6 @@ export default {
     }
 }
 </script>
-
 <style>
 .bgpage{
     background: url(src/assets/true.png);
@@ -525,9 +537,14 @@ export default {
 .container {
     display: flex; /* 将容器设置为 flex 容器 */
 }
-.box {
+#first-line .box {
     flex: 1; /* 每个子元素占据相等的空间 */
     height: 300px;
+    margin: 10px;
+}
+#second-line .box {
+    flex: 1; /* 每个子元素占据相等的空间 */
+    height: 400px;
     margin: 10px;
 }
 </style>

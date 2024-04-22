@@ -11,7 +11,8 @@
   "dependencies": {
     "echarts": "^5.5.0",
     "echarts-wordcloud": "^2.1.0",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-ctk-date-time-picker": "^3.0.0-alpha.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
