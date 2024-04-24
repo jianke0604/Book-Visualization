@@ -214,7 +214,7 @@ export default {
         console.log(this.date);
         // Load the heat data when the component is mounted
         this.loadHeatData();
-        this.initEchart();
+        this.drawWordCloud();
         // Load the library attendance data when the component is mounted
         this.loadLibraryAttendanceData();
         this.drawPortrait();
@@ -225,73 +225,69 @@ export default {
         this.dealWeek();
     },
     methods: {
-        initEchart(){
-    const initChart = () => {
-        const echartDom = document.getElementById('myEchart')
-        const myChart = echarts.init(echartDom)
-        const option  = {
-            series: [{
-                type: 'wordCloud',
-                shape: 'diamond',
-                keepAspect: false,
-                left: 'center',
-                top: 'center',
-                width: '100%',
-                height: '100%',
-                right: null,
-                bottom: null,
-                sizeRange: [12, 60], // 调整文字大小范围
-                rotationRange: [0,0], // 调整文字旋转角度范围
-                gridSize: 16, // 调整词云网格大小
-                drawOutOfBound: false,
-                layoutAnimation: true,
-                textStyle: {
-                    fontFamily: 'sans-serif',
-                    fontWeight: 'bold',
-                    color: function () {
-                        // 使用明亮的颜色
-                        return 'rgb(' + [
-                            Math.round(100 + Math.random() * 205),
-                            Math.round(100 + Math.random() * 205),
-                            Math.round(100 + Math.random() * 205)
-                        ].join(',') + ')';
-                    }
-                },
-                emphasis: {
+        drawWordCloud(){
+            const echartDom = document.getElementById('myEchart')
+            const myChart = echarts.init(echartDom)
+            const option  = {
+                series: [{
+                    type: 'wordCloud',
+                    shape: 'diamond',
+                    keepAspect: false,
+                    left: 'center',
+                    top: 'center',
+                    width: '100%',
+                    height: '100%',
+                    right: null,
+                    bottom: null,
+                    sizeRange: [12, 60], // 调整文字大小范围
+                    rotationRange: [0,0], // 调整文字旋转角度范围
+                    gridSize: 16, // 调整词云网格大小
+                    drawOutOfBound: false,
+                    layoutAnimation: true,
                     textStyle: {
-                        textShadowBlur: 3,
-                        textShadowColor: '#333'
-                    }
-                },
-                data: this.heatData.map(function (item) {
-                    console.log(item);
-                    return {
-                        name: item[0],
-                        value: Math.sqrt(item[1])
-                    }
-                })
-            }]
-        };
-        option && myChart.setOption(option)
+                        fontFamily: 'sans-serif',
+                        fontWeight: 'bold',
+                        color: function () {
+                            // 使用明亮的颜色
+                            return 'rgb(' + [
+                                0,
+                                Math.round(100 + Math.random() * 205),
+                                Math.round(100 + Math.random() * 205)
+                            ].join(',') + ')';
+                        }
+                    },
+                    emphasis: {
+                        textStyle: {
+                            textShadowBlur: 3,
+                            textShadowColor: '#333'
+                        }
+                    },
+                    data: this.heatData.map(function (item) {
+                        console.log(item);
+                        return {
+                            name: item[0],
+                            value: Math.sqrt(item[1])
+                        }
+                    })
+                }]
+            };
+            option && myChart.setOption(option)
 
-        // 随着屏幕大小调节图表
-        window.addEventListener("resize", () => {
-            myChart.resize();
-        });
-    };
-
-    if (document.readyState === 'complete') {
-        initChart();
-    } else {
-        window.onload = initChart;
-    }
+            // 随着屏幕大小调节图表
+            window.addEventListener("resize", () => {
+                myChart.resize();
+            });
         },
         loadHeatData() {
             // Load the JSON data asynchronously
             import('../../../data/03-检索热度.json')
                 .then(module => {
                     // Once data is loaded, assign it to the heatData array
+                    console.log('HeatData', module.default.data);
                     this.heatData = module.default.data;
+                })
+                .then(() => {
+                    this.drawWordCloud();
                 })
                 .catch(error => {
                     console.error('Error loading heat data:', error);
