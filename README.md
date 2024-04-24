@@ -1,6 +1,18 @@
-# vueframework
+# Book-Visualization
 
-This template should help get you started developing with Vue 3 in Vite.
+This is the source code for our project Book-Visualization.
+
+### data structure
+
+You should put the `data` folder in the root directory of the project.
+
+The structure tree of this project is as follows:
+
+```
+project
+    -- data
+    -- vueframework
+```
 
 ## Recommended IDE Setup
 
@@ -20,16 +32,4 @@ npm install
 
 ```sh
 npm run dev
-```
-
-### data structure
-
-You should put the `data` folder in the root directory of the project.
-
-The structure tree of this project is as follows:
-
-```
-project
-    -- data
-    -- vueframework
 ```
