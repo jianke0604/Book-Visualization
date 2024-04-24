@@ -70,7 +70,7 @@ export default {
                     text: '小组学习室预约次数',
                     left: 'center',
                     textStyle: {
-                        color: 'red'
+                        color: 'white'
                     }
                 },
                
@@ -78,7 +78,7 @@ export default {
                     data: ['主馆','包玉刚图书馆'],
                     top: '10%',
                     textStyle: {
-                        color: 'red'
+                        color: 'white'
                     }
                 },
                 grid: {
@@ -94,7 +94,7 @@ export default {
                     axisLabel: {
                         show: true,
                         textStyle: {
-                        color: 'red'
+                        color: 'white'
                         }
                      }
                     }
@@ -105,7 +105,7 @@ export default {
                     axisLabel: {
                         show: true,
                         textStyle: {
-                        color: 'red'
+                        color: 'white'
                         }
                      }
                     }
@@ -118,7 +118,17 @@ export default {
                     emphasis: {
                         focus: 'series'
                     },
-                    data: this.zt_cnt
+                    data: this.zt_cnt,
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                {offset: 0, color: 'rgba(102, 153, 255, 0.5)'},
+                                {offset: 1, color: 'rgba(102, 153, 255, 0.2)'}
+                            ]
+                        ),
+                        borderRadius: [0, 0, 0, 0]
+                    }
                     },
                     {
                     name: '包玉刚图书馆',
@@ -127,7 +137,17 @@ export default {
                     emphasis: {
                         focus: 'series'
                     },
-                    data: this.bt_cnt
+                    data: this.bt_cnt,
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                {offset: 0, color: 'rgba(153, 255, 51, 0.5)'},
+                                {offset: 1, color: 'rgba(153, 255, 51, 0.2)'}
+                            ]
+                        ),
+                        borderRadius: [10, 10, 0, 0]
+                    }
                     },
                     
                 ]
@@ -145,7 +165,8 @@ export default {
 <style>
 
 #main{
+    margin-top: 10px;
     width: 100%;
-    height: 75%;
+    height: 90%;
 }   
 </style>

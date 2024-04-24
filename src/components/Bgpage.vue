@@ -1,35 +1,83 @@
 <template>
     <div class="bgpage">
         <Header></Header>
-                    <!-- 月份和日期输入框 -->
-                    <VueCtkDateTimePicker v-model="date" 
-                    format="DD-MM" formatted="l" color="coral" input-size="sm" dark no-header overlay no-button noClearButton noLabel 
-                    only-date></VueCtkDateTimePicker>
+        <div class="container" id="top">
+            <!-- 月份和日期输入框 -->
+            <div>
+                <div class="text">
+                    日期
+                </div>
+                <VueCtkDateTimePicker v-model="date" 
+                    format="DD-MM" formatted="ll" color="rgba(102, 102, 255, 0.7)" button-color="black" input-size="sm" dark no-header no-button noClearButton noLabel 
+                    only-date>
+                </VueCtkDateTimePicker>   
+            </div>
+            
+            <div class="count">
+                <div class="text">
+                    纸质馆藏累计
+                </div>
+                <div class="num">
+                   <div class="val">378</div><div class="unit">万册</div> 
+                </div>
+            </div>
+            <div class="count">
+                <div class="text">
+                    数据库
+                </div>
+                <div class="num">
+                    <div class="val">443</div><div class="unit">个</div>
+                </div>
+            </div>
+            <div class="count">
+                <div class="text">
+                    电子图书
+                </div>
+                <div class="num">
+                    <div class="val">334.7</div><div class="unit">万册</div>
+                </div>
+            </div>
+            <div class="count">
+                <div class="text">
+                    电子期刊
+                </div>
+                <div class="num">
+                    <div class="val">5.8</div><div class="unit">万册</div>
+                </div>
+            </div>
+            <div class="count">
+                <div class="text">
+                    学位论文
+                </div>
+                <div class="num">
+                    <div class="val">556.9</div><div class="unit">万册</div>
+                </div>
+            </div>
+        </div>
         <div>
             <div class="container" id="first-line">
-                <div class="box">
+                <div class="box" style="width: 30%;">
                     <Viewbox
-                        title=""
+                        title="检索热度"
                         :boxb="true"
                     >
-                        <div style="color: white; font-weight: bold; font-style: italic;">检索热度：</div><br>
                         <div id="myEchart" style="width: 100%; height: 40%;"></div><br>
-                        <div style="color: white; font-weight: bold; font-style: italic;">新书榜单：</div><br>
-                        <div id="newBook" style="color: white"> 1 段成式. 《神游大唐》. I242.1/A57-6 2023</div>
-                        <div id="newBook" style="color: white"> 2 巴菲特. 《父亲巴菲特教我的事》. I712.55/E59 2023</div>
-                        <div id="newBook" style="color: white"> 3 马瑟斯. 《Python编程》. TP311.56/I53 2023</div>
+                        <div class="in-title" style="color: white; font-weight: bold; font-style: italic;">新书榜单</div><br>
+                        <div class="newBook" style="color: white; margin: 10px;"> 1 段成式. 《神游大唐》. I242.1/A57-6 2023</div>
+                        <div class="newBook" style="color: white; margin: 10px"> 2 巴菲特. 《父亲巴菲特教我的事》. I712.55/E59 2023</div>
+                        <div class="newBook" style="color: white; margin: 10px"> 3 马瑟斯. 《Python编程》. TP311.56/I53 2023</div>
                     </Viewbox>
                 </div>
-                <div class="box">
+                <div class="box" style="width: 40%;">
                     <Viewbox
-                        title=""
+                        title="在馆人数分布"
                         :boxb="true"
                     >
                         <!-- 曲线图容器 -->
-                        <div id="attendanceChart" style="width: 100%; height: 100%;"></div>
+                        <div id="attendanceChart" style="width: 100%; height: 90%; margin-top: 10px;"></div>
                     </Viewbox>
                 </div>
-                <div class="box">
+                <div class="box" style="width: 30%;">
                     <Viewbox
                         title="借还数据"
                         :boxb="true"
@@ -39,7 +87,15 @@
                 </div>
             </div>
             <div class="container" id="second-line">
-                <div class="box">
+                <div class="box" style="width: 35%;">
+                    <Viewbox
+                        title="读者学院分布"
+                        :boxb="true"
+                    >
+                        <div id="department" style="width: 100%; height: 90%; margin-top: 10px;"></div>
+                    </Viewbox>
+                </div>
+                <div class="box" style="width: 15%;">
                     <Viewbox
                         title="用户画像"
                         :boxb="true"
@@ -47,15 +103,7 @@
                         <div id="portrait" style="width: 100%; height: 100%;"></div>
                     </Viewbox>
                 </div>
-                <div class="box">
-                    <Viewbox
-                        title="读者学院分布"
-                        :boxb="true"
-                    >
-                        <div id="department" style="width: 100%; height: 80%;"></div>
-                    </Viewbox>
-                </div>
-                <div class="box">
+                <div class="box" style="width: 25%;">
                     <Viewbox
                         title="小组学习室/面试空间预约"
                         :boxb="true"
@@ -63,7 +111,7 @@
                         <Xzxxs/>
                     </Viewbox>
                 </div>
-                <div class="box">
+                <div class="box" style="width: 25%;">
                     <Viewbox
                         title="共享办公位热度"
                         :boxb="true"
@@ -79,7 +127,7 @@
                         title="年度榜单"
                         :boxb="true"
                     >
-                        <div id="yearRank" style="width: 100%; height: 80%;"></div>
+                        <div id="yearRank" style="width: 100%; height: 90%; margin-top: 10px;"></div>
                     </Viewbox>
                 </div>
                 <div class="box">
@@ -87,7 +135,7 @@
                         title="季度榜单"
                         :boxb="true"
                     >
-                        <div id="quarterRank" style="width: 100%; height: 80%;"></div>
+                        <div id="quarterRank" style="width: 100%; height: 90%; margin-top: 10px;"></div>
                     </Viewbox>
                 </div>
                 <div class="box">
@@ -95,7 +143,7 @@
                         title="月度榜单"
                         :boxb="true"
                     >
-                        <div id="monthRank" style="width: 100%; height: 80%;"></div>
+                        <div id="monthRank" style="width: 100%; height: 90%; margin-top: 10px;"></div>
                     </Viewbox>
                 </div>
                 <div class="box">
@@ -103,7 +151,7 @@
                         title="周榜"
                         :boxb="true"
                     >
-                        <div id="weekRank" style="width: 100%; height: 80%;"></div>
+                        <div id="weekRank" style="width: 100%; height: 90%; margin-top: 10px"></div>
                     </Viewbox>
                 </div>
             </div>
@@ -303,9 +351,9 @@ export default {
                     top: 30 // 设置图例的位置在图表上方，距离顶部 30px
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
+                    left: '5%',
+                    right: '6%',
+                    bottom: '6%',
                     containLabel: true
                 },
                 xAxis: {
@@ -351,7 +399,24 @@ export default {
                         data: zgData,
                         smooth: true,
                         areaStyle: {
-                            color: 'rgba(255, 0, 0, 0.5)' // 设置曲线下的面积颜色为半透明红色
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            {offset: 0, color: 'rgba(0, 153, 255, 0.5)'},
+                                            {offset: 0.5, color: 'rgba(0, 153, 255, 0.1)'},
+                                            {offset: 1, color: 'rgba(0, 153, 255, 0)'}
+                                        ]
+                                )
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(0, 153, 255, 0.5)',
+                                lineStyle: {
+                                    color: 'rgba(0, 153, 255, 0.5)'
+                                }
+                            }
                         }
                     },
                     {
@@ -360,7 +425,24 @@ export default {
                         data: lzdData,
                         smooth: true,
                         areaStyle: {
-                            color: 'rgba(0, 0, 255, 0.5)' // 设置曲线下的面积颜色为半透明蓝色
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            {offset: 0, color: 'rgba(153, 204, 0, 0.5)'},
+                                            {offset: 0.5, color: 'rgba(153, 204, 0, 0.1)'},
+                                            {offset: 1, color: 'rgba(153, 204, 0, 0)'}
+                                        ]
+                                )
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(153, 204, 0, 0.5)',
+                                lineStyle: {
+                                    color: 'rgba(153, 204, 0, 0.5)'
+                                }
+                            }
                         }
                     },
                     {
@@ -369,7 +451,24 @@ export default {
                         data: bygData,
                         smooth: true,
                         areaStyle: {
-                            color: 'rgba(0, 255, 0, 0.5)' // 设置曲线下的面积颜色为半透明绿色
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            {offset: 0, color: 'rgba(102, 102, 255, 0.5)'},
+                                            {offset: 0.5, color: 'rgba(102, 102, 255, 0.1)'},
+                                            {offset: 1, color: 'rgba(102, 102, 255, 0)'}
+                                        ]
+                                )
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(102, 102, 255, 0.5)',
+                                lineStyle: {
+                                    color: 'rgba(102, 102, 255, 0.5)'
+                                }
+                            }
                         }
                     },
                     {
@@ -378,7 +477,24 @@ export default {
                         data: xhskgData,
                         smooth: true,
                         areaStyle: {
-                            color: 'rgba(255, 165, 0, 0.5)' // 设置曲线下的面积颜色为半透明橙色
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            {offset: 0, color: 'rgba(0, 204, 0, 0.5)'},
+                                            {offset: 0.5, color: 'rgba(0, 204, 0, 0.1)'},
+                                            {offset: 1, color: 'rgba(0, 204, 0, 0)'}
+                                        ]
+                                )
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(0, 204, 0, 0.5)',
+                                lineStyle: {
+                                    color: 'rgba(0, 204, 0, 0.5)'
+                                }
+                            }
                         }
                     }
                 ]
@@ -433,13 +549,21 @@ export default {
         drawPortrait() {
             var chartDom = document.getElementById('portrait');
             var myChart = echarts.init(chartDom);
+            var colorlist = [
+                                'rgba(102, 153, 255, 0.9)',
+                                'rgba(51, 204, 255, 0.9)',
+                                'rgba(0, 255, 255, 0.9)',
+                                'rgba(102, 255, 103, 0.9)',
+                                'rgba(204, 255, 51, 0.9)'
+                            ];
             let option = {
                     tooltip: {
                         trigger: 'item'
                     },
                     legend: {
+                        icon: 'circle',
                         top: '5%',
-                        left: 'left',
+                        left: 'center',
                         orient: 'vertical',
                         textStyle: {
                             color: '#FFFFFF' // Set the color of the legend to white
@@ -453,7 +577,8 @@ export default {
                         {
                         name: '年总入馆人数',
                         type: 'pie',
-                        radius: ['30%', '60%'],
+                        center: ['50%', '65%'],
+                        radius: ['50%', '60%'],
                         avoidLabelOverlap: false,
                         padAngle: 5,
                         itemStyle: {
@@ -474,7 +599,19 @@ export default {
                         labelLine: {
                             show: false
                         },
-                        data: Object.entries(this.groupedData).map(([key, value]) => ({value : value, name : key}))
+                        data: Object.entries(this.groupedData).map(([key, value]) => ({value : value, name : key, 
+                            itemStyle: {
+                                shadowBlur: 20,
+                                shadowColor: colorlist[Object.keys(this.groupedData).indexOf(key)],
+                            }
+                        })),
+                        itemStyle: {
+                            normal: {
+                                color: function (params) {
+                                    return colorlist[params.dataIndex]
+                                }
+                            }
+                        }
                         }
                     ]
                 };
@@ -515,6 +652,7 @@ export default {
             option = {
             title: {
                 text: '入馆与借阅分布',
+                left: 'center',
                 textStyle: {
                     color: '#FFFFFF'
                 }
@@ -528,11 +666,13 @@ export default {
             legend: {
                 textStyle: {
                     color: '#FFFFFF'
-                }
+                },
+                top: '10%'
             },
             grid: {
                 left: '3%',
-                right: '4%',
+                right: '7%',
+                top: '20%',
                 bottom: '3%',
                 containLabel: true
             },
@@ -552,14 +692,34 @@ export default {
             },
             series: [
                 {
-                name: '入馆人数',
-                type: 'bar',
-                data: sortedNumberArr.map(([key, _]) => this.academyNumberData[key])
+                    name: '入馆人数',
+                    type: 'bar',
+                    data: sortedNumberArr.map(([key, _]) => this.academyNumberData[key]),
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            1, 0, 0, 0,
+                            [
+                                {offset: 0, color: 'rgba(102, 153, 255, 0.5)'},
+                                {offset: 1, color: 'rgba(102, 153, 255, 0.3)'}
+                            ]
+                        ),
+                        borderRadius: [0, 5, 5, 0]
+                    }
                 },
                 {
-                name: '借阅数量',
-                type: 'bar',
-                data: sortedNumberArr.map(([_, value]) => value)
+                    name: '借阅数量',
+                    type: 'bar',
+                    data: sortedNumberArr.map(([_, value]) => value),
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            1, 0, 0, 0,
+                            [
+                                {offset: 0, color: 'rgba(153, 255, 51, 0.5)'},
+                                {offset: 1, color: 'rgba(153, 255, 51, 0.3)'}
+                            ]
+                        ),
+                        borderRadius: [0, 5, 5, 0]
+                    }
                 }
             ]
             };
@@ -591,8 +751,8 @@ export default {
                 x: 'right'
             },
             grid: {
-                left: '3%',
-                right: '4%',
+                left: '5%',
+                right: '9%',
                 bottom: '3%',
                 containLabel: true
             },
@@ -616,9 +776,19 @@ export default {
             },
             series: [
                 {
-                name: '2023',
-                type: 'bar',
-                data: Object.entries(this.yearRankData).reverse().map(([key, value]) => value),
+                    name: '2023',
+                    type: 'bar',
+                    data: Object.entries(this.yearRankData).reverse().map(([key, value]) => value),
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            1, 0, 0, 0,
+                            [
+                                {offset: 0, color: 'rgba(102, 153, 255, 0.5)'},
+                                {offset: 1, color: 'rgba(102, 153, 255, 0.2)'}
+                            ]
+                        ),
+                        borderRadius: [0, 20, 20, 0]
+                    }
                 }
             ]
             };
@@ -650,8 +820,8 @@ export default {
                 x: 'right'
             },
             grid: {
-                left: '3%',
-                right: '4%',
+                left: '5%',
+                right: '9%',
                 bottom: '3%',
                 containLabel: true
             },
@@ -675,9 +845,19 @@ export default {
             },
             series: [
                 {
-                name: '第二季度',
-                type: 'bar',
-                data: Object.entries(this.quarterRankData).reverse().map(([key, value]) => value),
+                    name: '第二季度',
+                    type: 'bar',
+                    data: Object.entries(this.quarterRankData).reverse().map(([key, value]) => value),
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            1, 0, 0, 0,
+                            [
+                                {offset: 0, color: 'rgba(51, 204, 255, 0.5)'},
+                                {offset: 1, color: 'rgba(51, 204, 255, 0.2)'}
+                            ]
+                        ),
+                        borderRadius: [0, 20, 20, 0]
+                    }
                 }
             ]
             };
@@ -709,8 +889,8 @@ export default {
                 x: 'right'
             },
             grid: {
-                left: '3%',
-                right: '4%',
+                left: '5%',
+                right: '9%',
                 bottom: '3%',
                 containLabel: true
             },
@@ -734,9 +914,19 @@ export default {
             },
             series: [
                 {
-                name: '四月份',
-                type: 'bar',
-                data: Object.entries(this.quarterRankData).reverse().map(([key, value]) => value),
+                    name: '四月份',
+                    type: 'bar',
+                    data: Object.entries(this.quarterRankData).reverse().map(([key, value]) => value),
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            1, 0, 0, 0,
+                            [
+                                {offset: 0, color: 'rgba(0, 255, 255, 0.5)'},
+                                {offset: 1, color: 'rgba(0, 255, 255, 0.2)'}
+                            ]
+                        ),
+                        borderRadius: [0, 20, 20, 0]
+                    }
                 }
             ]
             };
@@ -768,8 +958,8 @@ export default {
                 x: 'right'
             },
             grid: {
-                left: '3%',
-                right: '4%',
+                left: '5%',
+                right: '9%',
                 bottom: '3%',
                 containLabel: true
             },
@@ -794,9 +984,19 @@ export default {
             },
             series: [
                 {
-                name: '第17周',
-                type: 'bar',
-                data: Object.entries(this.quarterRankData).reverse().map(([key, value]) => value),
+                    name: '第17周',
+                    type: 'bar',
+                    data: Object.entries(this.quarterRankData).reverse().map(([key, value]) => value),
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(
+                            1, 0, 0, 0,
+                            [
+                                {offset: 0, color: 'rgba(102, 255, 103, 0.5)'},
+                                {offset: 1, color: 'rgba(102, 255, 103, 0.3)'}
+                            ]
+                        ),
+                        borderRadius: [0, 20, 20, 0]
+                    }
                 }
             ]
             };
@@ -809,25 +1009,68 @@ export default {
 <style>
 .bgpage{
     background: url(src/assets/true.png);
-    height: 150vh;
+    height: 100%;
     width: 100vw;
 }
 .container {
     display: flex; /* 将容器设置为 flex 容器 */
 }
-#first-line .box {
+.newBook {
+    background: linear-gradient(to right, rgba(102, 104, 255, 0.5), rgba(102, 104, 204, 0.0));
+}
+#top > div {
     flex: 1; /* 每个子元素占据相等的空间 */
-    height: 300px;
+    margin: 10px;
+    border-right: rgba(102, 255, 255, 0.9) 5px solid;
+    padding-right: 20px;
+}
+#top .text{
+    display: inline;
+    border-top-left-radius: 5px;
+    color: rgb(204, 255, 255);
+    padding: 0 40px 0 10px;
+    font-weight:bold;
+    font-size: 0.6rem;
+    font-style: italic;
+    margin-top: 10px;
+    z-index: 1000;
+    background: linear-gradient(to right, rgba(102, 104, 255, 0.9), rgba(102, 104, 204, 0.0));
+    border-bottom: rgba(102, 104, 255, 0.9) 2px solid;
+}
+#top .num {
+    width: 100%;
+    display: flex;
+    font-size: 1.5rem;
+    font-style: italic;
+}
+#top .val{
+    color: #fff;
+    flex-wrap: wrap;
+}
+#top .unit{
+    color: #fff;
+    flex-wrap: wrap;
+    font-size: 0.5rem;
+    padding-top: 1rem;
+    color: rgba(102, 104, 255, 0.9);
+}
+#first-line > div {
+    height: 335px;
     margin: 10px;
 }
-#second-line .box {
-    flex: 1; /* 每个子元素占据相等的空间 */
-    height: 400px;
+#second-line > div {
+    height: 335px;
     margin: 10px;
 }
-#third-line .box {
+#third-line > div {
     flex: 1; /* 每个子元素占据相等的空间 */
-    height: 400px;
+    height: 335px;
+    margin: 10px;
+}
+.Viewbox title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
     margin: 10px;
 }
 </style>

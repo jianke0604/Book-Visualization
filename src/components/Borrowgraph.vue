@@ -1,15 +1,19 @@
 <template>
     <div id="box1">
-        <div id="lbox">
-            <h1 style="color:red;margin:5px">当日借书</h1>
-            <h2 v-if="loadFlag" style="color:yellow">{{ dailyBorrowData[fmonth-1][fday-1] }}</h2>
-            <h1 style="color:red;margin:5px">当日还书</h1>
-            <h2 v-if="loadFlag" style="color:yellow">{{ dailyReturnData[fmonth-1][fday-1] }}</h2>
-        </div>
         <div id="rbox">
 
         </div>
-    </div>
+        <div id="lbox" style="margin-top: 10px;">
+            <p>
+                <a style="color:#FFFFFF;margin:5px">当日借书：</a>
+                <a v-if="loadFlag" style="color:rgba(102, 104, 255, 0.9)">{{ dailyBorrowData[fmonth-1][fday-1] }}</a>
+            </p>
+            <p>
+                <a style="color:#FFFFFF;margin:5px">当日还书：</a>
+                <a v-if="loadFlag" style="color:rgba(102, 104, 255, 0.9)">{{ dailyReturnData[fmonth-1][fday-1] }}</a>    
+            </p>
+        </div>
+    </div>“
     
 </template>
 
@@ -108,7 +112,7 @@ export default {
                     text: m+'月借还书趋势',
                     left: 'center',
                     textStyle: {
-                        color: 'red'
+                        color: 'white'
                     }
                 },
                 tooltip: {
@@ -116,12 +120,15 @@ export default {
                 },
                 legend: {
                     data: ['借阅','归还'],
-                    top: '10%'
+                    top: '10%',
+                    textStyle: {
+                        color: 'white'
+                    }
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
+                    left: '5%',
+                    right: '5%',
+                    bottom: '0%',
                     containLabel: true
                 },
                 xAxis: {
@@ -131,7 +138,7 @@ export default {
                     axisLabel: {
                         show: true,
                         textStyle: {
-                        color: 'red'
+                        color: 'white'
                         }
                      }
                 }, 
@@ -140,7 +147,7 @@ export default {
                     axisLabel: {
                     show: true,
                         textStyle: {
-                        color: 'red'
+                        color: 'white'
                         }
                     }
                 },
@@ -151,8 +158,26 @@ export default {
                         data: this.dailyBorrowData[m-1],
                         smooth: true,
                         areaStyle: {
-                            color: 'rgba(255, 0, 0, 0.5)' // 设置曲线下的面积颜色为半透明红色
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            {offset: 0, color: 'rgba(153, 204, 0, 0.5)'},
+                                            {offset: 0.5, color: 'rgba(153, 204, 0, 0.2)'},
+                                            {offset: 1, color: 'rgba(153, 204, 0, 0)'}
+                                        ]
+                                    )
+                                }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(153, 204, 0, 0.5)',
+                                lineStyle: {
+                                    color: 'rgba(153, 204, 0, 0.5)'
+                                }
+                            }
                         }
+
                     },
                     {
                         name: '归还',
@@ -160,7 +185,24 @@ export default {
                         data: this.dailyReturnData[m-1],
                         smooth: true,
                         areaStyle: {
-                            color: 'rgba(0, 0, 255, 0.5)' // 设置曲线下的面积颜色为半透明蓝色
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            {offset: 0, color: 'rgba(0, 153, 255, 0.5)'},
+                                            {offset: 0.5, color: 'rgba(0, 153, 255, 0.2)'},
+                                            {offset: 1, color: 'rgba(0, 153, 255, 0)'}
+                                        ]
+                                    )
+                                }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(0, 153, 255, 0.5)',
+                                lineStyle: {
+                                    color: 'rgba(0, 153, 255, 0.5)'
+                                }
+                            }
                         }
                     }
                    
@@ -176,27 +218,20 @@ export default {
 
 <style>
 
-#day{
-    width: 30%;
-    height: 80%;
-}
-
-#month{
-    width: 70%;
-    height: 80%;
-}
-
 #box1{
     display: flex;
+    flex-flow: column;
     width: 100%;
-    height: 80%
+    height: 90%;
+    margin-top: 10px;
 }
-#lbox{
-    width:30%;
-    height: 100%
+#lbox{ 
+    display: flex;
+    flex-flow: horizontal;
+    margin: auto;
 }
 #rbox{
-    width:60%;
-    height: 100%
+    width:100%;
+    height: 80%
 }
 </style>

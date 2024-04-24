@@ -79,7 +79,8 @@ export default {
                 position: 'top'
             },
             grid: {
-                height: '50%',
+                left: '20%',
+                height: '65%',
                 top: '10%'
             },
             xAxis: {
@@ -91,7 +92,7 @@ export default {
                 axisLabel: {
                     show: true,
                     textStyle: {
-                    color: 'red'
+                    color: 'white'
                     }
                 }
             },
@@ -104,7 +105,7 @@ export default {
                 axisLabel: {
                     show: true,
                     textStyle: {
-                    color: 'red'
+                    color: 'white'
                     }
                 }
             },
@@ -114,7 +115,10 @@ export default {
                 calculable: true,
                 orient: 'horizontal',
                 left: 'center',
-                bottom: '15%'
+                bottom: '0%',
+                inRange: {
+                color: ['rgba(204, 255, 102, 0.0)', 'rgba(0, 51, 102, 1)']
+                },
             },
             series: [
                 {
