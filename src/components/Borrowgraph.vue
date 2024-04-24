@@ -4,12 +4,12 @@
 
         </div>
         <div id="lbox" style="margin-top: 10px;">
-            <p>
-                <a style="color:#FFFFFF;margin:5px">当日借书：</a>
+            <p style="width: 120px;">
+                <a style="color:#FFFFFF; margin: 5px">当日借书：</a>
                 <a v-if="loadFlag" style="color:rgba(102, 104, 255, 0.9)">{{ dailyBorrowData[fmonth-1][fday-1] }}</a>
             </p>
-            <p>
-                <a style="color:#FFFFFF;margin:5px">当日还书：</a>
+            <p style="width: 120px;">
+                <a style="color:#FFFFFF; margin:5px;">当日还书：</a>
                 <a v-if="loadFlag" style="color:rgba(102, 104, 255, 0.9)">{{ dailyReturnData[fmonth-1][fday-1] }}</a>    
             </p>
         </div>
@@ -137,18 +137,14 @@ export default {
                     data: xdata,
                     axisLabel: {
                         show: true,
-                        textStyle: {
                         color: 'white'
-                        }
                      }
                 }, 
                 yAxis: {
                     type: 'value',
                     axisLabel: {
-                    show: true,
-                        textStyle: {
+                        show: true,
                         color: 'white'
-                        }
                     }
                 },
                 series: [
@@ -158,23 +154,19 @@ export default {
                         data: this.dailyBorrowData[m-1],
                         smooth: true,
                         areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: 'rgba(153, 204, 0, 0.5)'},
-                                            {offset: 0.5, color: 'rgba(153, 204, 0, 0.2)'},
-                                            {offset: 1, color: 'rgba(153, 204, 0, 0)'}
-                                        ]
-                                    )
-                                }
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(153, 204, 0, 0.5)'},
+                                    {offset: 0.5, color: 'rgba(153, 204, 0, 0.2)'},
+                                    {offset: 1, color: 'rgba(153, 204, 0, 0)'}
+                                ]
+                            )
                         },
                         itemStyle: {
-                            normal: {
-                                color: 'rgba(153, 204, 0, 0.5)',
-                                lineStyle: {
-                                    color: 'rgba(153, 204, 0, 0.5)'
-                                }
+                            color: 'rgba(153, 204, 0, 0.5)',
+                            lineStyle: {
+                                color: 'rgba(153, 204, 0, 0.5)'
                             }
                         }
 
@@ -185,23 +177,19 @@ export default {
                         data: this.dailyReturnData[m-1],
                         smooth: true,
                         areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: 'rgba(0, 153, 255, 0.5)'},
-                                            {offset: 0.5, color: 'rgba(0, 153, 255, 0.2)'},
-                                            {offset: 1, color: 'rgba(0, 153, 255, 0)'}
-                                        ]
-                                    )
-                                }
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(0, 153, 255, 0.5)'},
+                                    {offset: 0.5, color: 'rgba(0, 153, 255, 0.2)'},
+                                    {offset: 1, color: 'rgba(0, 153, 255, 0)'}
+                                ]
+                            )
                         },
                         itemStyle: {
-                            normal: {
-                                color: 'rgba(0, 153, 255, 0.5)',
-                                lineStyle: {
-                                    color: 'rgba(0, 153, 255, 0.5)'
-                                }
+                            color: 'rgba(0, 153, 255, 0.5)',
+                            lineStyle: {
+                                color: 'rgba(0, 153, 255, 0.5)'
                             }
                         }
                     }

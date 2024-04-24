@@ -8,8 +8,8 @@
                     日期
                 </div>
                 <VueCtkDateTimePicker v-model="date" 
-                    format="DD-MM" formatted="ll" color="rgba(102, 102, 255, 0.7)" button-color="black" input-size="sm" dark no-header no-button noClearButton noLabel 
-                    only-date>
+                    format="DD-MM-YYYY" formatted="ll" color="rgba(102, 102, 255, 0.7)" button-color="black" input-size="sm" dark no-button noClearButton 
+                    nolabel only-date min-date="20230101" max-date="20231231">
                 </VueCtkDateTimePicker>   
             </div>
             
@@ -198,7 +198,7 @@ export default {
             authorBookMap: {'明朝那些事儿': '当年明月', '三体': '刘慈欣,', '机器学习': '米切尔', '红楼梦': '曹雪芹,', '数值分析': '张平文', '福尔摩斯探案大全集': '柯南道尔', '神雕侠侣': '金庸,', '卡拉马佐夫兄弟': '陀思妥耶夫斯基', '天龙八部': '金庸,', '生物信息学': '陈铭', '人工智能': '杨健'},       
             month: '1', // 默认月份为1
             day: '31', // 默认日期为1
-            date: "01-01", // 日期选择器的值
+            date: "01-01-2023", // 日期选择器的值
             choose: ''  // 原本用于选择是年榜/季度榜/月榜/周榜
         }
     },
@@ -369,9 +369,7 @@ export default {
                                 return '';
                             }
                         },
-                        textStyle: {
-                            color: '#fff' // 设置坐标轴刻度文字颜色为白色
-                        }
+                        color: '#fff' // 设置坐标轴刻度文字颜色为白色
                     },
                     axisLine: {
                     lineStyle: {
@@ -387,9 +385,7 @@ export default {
                         }
                     },
                     axisLabel: {
-                        textStyle: {
-                            color: '#fff' // 设置坐标轴文字颜色为白色
-                        }
+                        color: '#fff' // 设置坐标轴文字颜色为白色
                     }
                 },
                 series: [
@@ -399,23 +395,19 @@ export default {
                         data: zgData,
                         smooth: true,
                         areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: 'rgba(0, 153, 255, 0.5)'},
-                                            {offset: 0.5, color: 'rgba(0, 153, 255, 0.1)'},
-                                            {offset: 1, color: 'rgba(0, 153, 255, 0)'}
-                                        ]
-                                )
-                            }
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(0, 153, 255, 0.5)'},
+                                    {offset: 0.5, color: 'rgba(0, 153, 255, 0.1)'},
+                                    {offset: 1, color: 'rgba(0, 153, 255, 0)'}
+                                ]
+                            )
                         },
                         itemStyle: {
-                            normal: {
-                                color: 'rgba(0, 153, 255, 0.5)',
-                                lineStyle: {
-                                    color: 'rgba(0, 153, 255, 0.5)'
-                                }
+                            color: 'rgba(0, 153, 255, 0.5)',
+                            lineStyle: {
+                                color: 'rgba(0, 153, 255, 0.5)'
                             }
                         }
                     },
@@ -425,25 +417,21 @@ export default {
                         data: lzdData,
                         smooth: true,
                         areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: 'rgba(153, 204, 0, 0.5)'},
-                                            {offset: 0.5, color: 'rgba(153, 204, 0, 0.1)'},
-                                            {offset: 1, color: 'rgba(153, 204, 0, 0)'}
-                                        ]
-                                )
-                            }
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(153, 204, 0, 0.5)'},
+                                    {offset: 0.5, color: 'rgba(153, 204, 0, 0.1)'},
+                                    {offset: 1, color: 'rgba(153, 204, 0, 0)'}
+                                ]
+                            )
                         },
                         itemStyle: {
-                            normal: {
                                 color: 'rgba(153, 204, 0, 0.5)',
                                 lineStyle: {
                                     color: 'rgba(153, 204, 0, 0.5)'
                                 }
                             }
-                        }
                     },
                     {
                         name: '包玉刚图书馆',
@@ -451,23 +439,19 @@ export default {
                         data: bygData,
                         smooth: true,
                         areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: 'rgba(102, 102, 255, 0.5)'},
-                                            {offset: 0.5, color: 'rgba(102, 102, 255, 0.1)'},
-                                            {offset: 1, color: 'rgba(102, 102, 255, 0)'}
-                                        ]
-                                )
-                            }
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(102, 102, 255, 0.5)'},
+                                    {offset: 0.5, color: 'rgba(102, 102, 255, 0.1)'},
+                                    {offset: 1, color: 'rgba(102, 102, 255, 0)'}
+                                ]
+                            )
                         },
                         itemStyle: {
-                            normal: {
-                                color: 'rgba(102, 102, 255, 0.5)',
-                                lineStyle: {
-                                    color: 'rgba(102, 102, 255, 0.5)'
-                                }
+                            color: 'rgba(102, 102, 255, 0.5)',
+                            lineStyle: {
+                                color: 'rgba(102, 102, 255, 0.5)'
                             }
                         }
                     },
@@ -477,23 +461,19 @@ export default {
                         data: xhskgData,
                         smooth: true,
                         areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: 'rgba(0, 204, 0, 0.5)'},
-                                            {offset: 0.5, color: 'rgba(0, 204, 0, 0.1)'},
-                                            {offset: 1, color: 'rgba(0, 204, 0, 0)'}
-                                        ]
-                                )
-                            }
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(0, 204, 0, 0.5)'},
+                                    {offset: 0.5, color: 'rgba(0, 204, 0, 0.1)'},
+                                    {offset: 1, color: 'rgba(0, 204, 0, 0)'}
+                                ]
+                            )
                         },
                         itemStyle: {
-                            normal: {
-                                color: 'rgba(0, 204, 0, 0.5)',
-                                lineStyle: {
-                                    color: 'rgba(0, 204, 0, 0.5)'
-                                }
+                            color: 'rgba(0, 204, 0, 0.5)',
+                            lineStyle: {
+                                color: 'rgba(0, 204, 0, 0.5)'
                             }
                         }
                     }
@@ -606,10 +586,8 @@ export default {
                             }
                         })),
                         itemStyle: {
-                            normal: {
-                                color: function (params) {
-                                    return colorlist[params.dataIndex]
-                                }
+                            color: function (params) {
+                                return colorlist[params.dataIndex]
                             }
                         }
                         }

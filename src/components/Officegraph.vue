@@ -91,9 +91,7 @@ export default {
                 },
                 axisLabel: {
                     show: true,
-                    textStyle: {
                     color: 'white'
-                    }
                 }
             },
             yAxis: {
@@ -104,9 +102,7 @@ export default {
                 },
                 axisLabel: {
                     show: true,
-                    textStyle: {
                     color: 'white'
-                    }
                 }
             },
             visualMap: {

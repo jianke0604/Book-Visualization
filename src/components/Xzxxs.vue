@@ -93,9 +93,7 @@ export default {
                     data: this.y_m,
                     axisLabel: {
                         show: true,
-                        textStyle: {
                         color: 'white'
-                        }
                      }
                     }
                 ],
@@ -104,9 +102,7 @@ export default {
                     type: 'value',
                     axisLabel: {
                         show: true,
-                        textStyle: {
                         color: 'white'
-                        }
                      }
                     }
                 ],
