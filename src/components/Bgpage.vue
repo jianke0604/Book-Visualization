@@ -214,7 +214,6 @@ export default {
         console.log(this.date);
         // Load the heat data when the component is mounted
         this.loadHeatData();
-        this.drawWordCloud();
         // Load the library attendance data when the component is mounted
         this.loadLibraryAttendanceData();
         this.drawPortrait();
