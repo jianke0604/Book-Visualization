@@ -61,7 +61,7 @@
                         title="检索热度"
                         :boxb="true"
                     >
-                        <div id="myEchart" style="width: 100%; height: 40%;"></div><br>
+                        <div id="myEchart" style="width: 100%; height: 50%;"></div><br>
                         <div class="in-title" style="color: white; font-weight: bold; font-style: italic;">新书榜单</div><br>
                         <div class="newBook" style="color: white; margin: 10px;"> 1 段成式. 《神游大唐》. I242.1/A57-6 2023</div>
                         <div class="newBook" style="color: white; margin: 10px"> 2 巴菲特. 《父亲巴菲特教我的事》. I712.55/E59 2023</div>
@@ -251,9 +251,9 @@ export default {
                     color: function () {
                         // 使用明亮的颜色
                         return 'rgb(' + [
-                            Math.round(50 + Math.random() * 205),
-                            Math.round(50 + Math.random() * 205),
-                            Math.round(50 + Math.random() * 205)
+                            Math.round(100 + Math.random() * 205),
+                            Math.round(100 + Math.random() * 205),
+                            Math.round(100 + Math.random() * 205)
                         ].join(',') + ')';
                     }
                 },

@@ -22,8 +22,14 @@ npm install
 npm run dev
 ```
 
-### Compile and Minify for Production
+### data structure
 
-```sh
-npm run build
+You should put the `data` folder in the root directory of the project.
+
+The structure tree of this project is as follows:
+
+```
+project
+    -- data
+    -- vueframework
 ```

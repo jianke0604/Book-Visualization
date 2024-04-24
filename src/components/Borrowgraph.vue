@@ -13,7 +13,7 @@
                 <a v-if="loadFlag" style="color:rgba(102, 104, 255, 0.9)">{{ dailyReturnData[fmonth-1][fday-1] }}</a>    
             </p>
         </div>
-    </div>“
+    </div>
     
 </template>
 
